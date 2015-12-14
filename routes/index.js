@@ -25,4 +25,15 @@ router.route('/signup').
 	get(authCtrl.deny).
 	post(authCtrl.signup.post);
 
+
+router.route('/projects').
+  get(ctrl.showProjects).
+  post(ctrl.createProject);
+
+router.route('/projects/:id').
+  get(ctrl.showProject).
+  delete(ctrl.destroyProject).
+  patch(ctrl.updateProject);
+
+
 module.exports = router;
