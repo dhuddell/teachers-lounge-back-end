@@ -66,10 +66,10 @@ var ctrl = {
 
         var pProject = new Promise(function(resolve, reject) {
             Project.create({
-                name : req.body.title,
-                description : req.body.description,
-                subject: req.body.subject,
-                grade: req.body.grade
+                    title : req.body.title,
+                    description : req.body.description,
+                    subject: req.body.subject,
+                    grade: req.body.grade
                 }, function(err, project) {
                     if(err) {
                         reject(err);
@@ -91,48 +91,67 @@ var ctrl = {
         });
     },
 
-
-    updateItem : function(req, res, next) {
+    showProject : function(req, res, next) {
         // check that user is logged in
         // check that body contains a password value
-        if(!req.body || !req.user || !req.body.name && !req.body.city) {
+        if( !req.user) {
+            var err = new Error("Unauthorized.");
+            return next(err);
+        }
+        Project.findById(req.params.id).exec().then(function(project){
+            res.json(project);
+        }).catch(function(err){
+            next(err);
+        });
+    },
+
+//UPDATED TO projects
+
+    updateProject : function(req, res, next) {
+        // check that user is logged in
+        // check that body contains a password value
+        if(!req.body || !req.user) {
             var err = new Error("No update supplied.");
             return next(err);
         }
         var pUpdate = new Promise(function(resolve, reject) {
-            ListItem.findByIdAndUpdate(
+            Project.findByIdAndUpdate(
                 req.params.id,
                 {
-                name : req.body.name,
-                city : req.body.city
+                    title : req.body.title,
+                    description : req.body.description,
+                    subject: req.body.subject,
+                    grade: req.body.grade
                 }, {new: true},
-                function(err, listItem){
+                function(err, project){
                     if(err) {
                         reject(err);
                         return;
                     }
-                    resolve(listItem);
+                    resolve(project);
                 }
             );
         });
 
-        pUpdate.then(function(listItem){
+        pUpdate.then(function(project){
           req.user.save();
-          return listItem;
-        }).then(function(listItem) {
-            res.json(listItem);
+          return project;
+        }).then(function(project) {
+            res.json(project);
         }).catch(function(err) {
             next(err);
         });
     },
 
-    destroyItem : function(req, res, next) {
+
+
+    destroyProject : function(req, res, next) {
         User.findByIdAndUpdate( req.user._id,{
-            $pullAll : { list: [ new mongoose.Types.ObjectId(req.params.id) ] }
+            $pullAll : { projects: [ new mongoose.Types.ObjectId(req.params.id) ] }
         },
         {new: true}).exec().then(function(){
             console.log('item id is ', req.params.id);
-            return ListItem.findByIdAndRemove(req.params.id).exec();
+            return Project.findByIdAndRemove(req.params.id).exec();
         }).then(function(){
             res.sendStatus(200);
         }).catch(function(err){

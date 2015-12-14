@@ -10,15 +10,15 @@ var projectSchema = new Schema({
   },
   description: {
     type : String,
-    required : true
+    // required : true
   },
   subject: {
     type : String,
-    required : true
+    // required : true
   },
   grade: {
     type : String,
-    required : true
+    // required : true
   }
 
 });
