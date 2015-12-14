@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var authCtrl = require('../controllers/auth');
+var ctrl = require('../controllers/project');
+
 
 /* GET home page. */
 router.get('/', authCtrl.root.get);
@@ -30,10 +32,10 @@ router.route('/projects').
   get(ctrl.showProjects).
   post(ctrl.createProject);
 
-router.route('/projects/:id').
-  get(ctrl.showProject).
-  delete(ctrl.destroyProject).
-  patch(ctrl.updateProject);
+// router.route('/projects/:id').
+//   get(ctrl.showProject).
+//   delete(ctrl.destroyProject).
+//   patch(ctrl.updateProject);
 
 
 module.exports = router;
