@@ -19,8 +19,11 @@ var projectSchema = new Schema({
   grade: {
     type : String,
     // required : true
+  },
+  url: {
+    type : String,
+    // required : true
   }
-
 });
 
 module.exports = projectSchema;

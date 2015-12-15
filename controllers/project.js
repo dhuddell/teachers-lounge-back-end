@@ -134,7 +134,6 @@ var ctrl = {
         });
 
         pUpdate.then(function(project){
-          req.user.save();
           return project;
         }).then(function(project) {
             res.json(project);
@@ -148,12 +147,15 @@ var ctrl = {
     destroyProject : function(req, res, next) {
         User.findByIdAndUpdate( req.user._id,{
             $pullAll : { projects: [ new mongoose.Types.ObjectId(req.params.id) ] }
-        },
-        {new: true}).exec().then(function(){
-            console.log('item id is ', req.params.id);
-            return Project.findByIdAndRemove(req.params.id).exec();
-        }).then(function(){
-            res.sendStatus(200);
+          },
+          {
+            new: true
+        }).exec().then(function(user){
+            return Project.findByIdAndRemove(req.params.id).exec().then(function(){
+                return user;
+            });
+        }).then(function(user){
+            res.json(user);
         }).catch(function(err){
             console.log(err);
             next(err);

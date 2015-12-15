@@ -25,7 +25,7 @@ var app = express();
 app.use(logger('dev'));
 
 app.use(cors({
-  origin: ['http://localhost:5000', /*'http://bucketlisters.github.io'*/],
+  origin: ['http://localhost:5000'],
   credentials: true
 }));
 
@@ -39,7 +39,7 @@ app.use(session({
     url : 'mongodb://localhost/teachers-lounge-sessions'
   }),
   cookie : {
-    maxAge : 1800000 // 30 minutes
+    maxAge : 300000 // 5 minutes
   },
   genid : function() {
     return uuid.v4({

@@ -16,7 +16,8 @@ var userSchema = new Schema({
 	projects : [{
 		type: Schema.Types.ObjectId,
 		ref: "Project"
-	}]
+	}],
+	hasSubmitted: boolean
 });
 
 userSchema.plugin(uniqueValidator);
