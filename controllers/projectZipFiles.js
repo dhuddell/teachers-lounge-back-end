@@ -15,7 +15,7 @@ var index = function index(req, res, next) {
 var create = function create(req, res, next) {
   console.log(req);
   awsUpload(req.file.buffer, {
-    title: req.body.name
+    title: req.body.title
     //user_id: req.user._id
   }).then(function(data){
     // req.user.userFiles.push(data._id);

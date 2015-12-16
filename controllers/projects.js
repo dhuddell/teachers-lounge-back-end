@@ -9,52 +9,23 @@ var Project = require('../models').model('Project');
 
 var ctrl = {
 
-    root : {
-        get : function(req, res) {
-            res.json(req.session);
-        },
-        'default' : function(err, req, res) {
-            res.status(500).
-                json({
-                    error : {
-                        name : err.name,
-                        message : err.message
-                    }
-                });
-        },
-        middleware : [
-            function(req, res, next) {
-                if(req.session) {
-                    if(req.session.currRequestRoute) {
-                        req.session.lastRequestRoute = req.session.currRequestRoute;
-                    }
 
-                    req.session.currRequestRoute = req.path;
-                }
-
-                next();
-            }
-        ]
-    },
-
-//DISPLAY ALL PROJECTS **FOR SEARCH**
-searchProjects : function(req, res, next) {
+    //DISPLAY ALL PROJECTS **FOR SEARCH**
+    searchProjects : function(req, res, next) {
         console.log(req.query);
-        if(!req.user && req.user.hasSubmitted === true) {
+        console.log(req.user);
+        var query = req.query || {user_id: req.user._id};
+        if(!req.user || !req.user.hasSubmitted) {
             var err = new Error("Not submitted-level user!");
             return next(err);
         }
 
-        Project.findOne({ 'title' : req.query.q }, 'title subject').exec().then(function(projects){
+        Project.find(query).exec().then(function(projects){
             res.json(projects);
         }).catch(function(err){
             next(err);
         });
-
-
-
     },
-
 
 //UPDATED showProjects
 
