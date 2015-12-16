@@ -1,0 +1,28 @@
+#!/usr/bin/env node
+
+'use strict';
+
+var fileUpload = require('./lib/file-upload.js');
+
+var fs = require('fs');
+var ProjectZipFile = require('./models/ProjectZipFile.js');
+
+var done = function() {
+  ProjectZipFile.db.close();
+};
+
+if (process.argv.length < 4) {
+  console.log('need caption and file name');
+  process.exit(1);
+}
+
+var caption = process.argv[2];
+var buffer = fs.readFileSync(process.argv[3]);
+
+fileUpload(caption, buffer, function(err, zipFile) {
+  setTimeout(done, 0);
+  if (err) {
+    throw err;
+  }
+  console.log(zipFile);
+});

@@ -17,7 +17,11 @@ var userSchema = new Schema({
 		type: Schema.Types.ObjectId,
 		ref: "Project"
 	}],
-	hasSubmitted: boolean
+	userFiles: {
+		type: [mongoose.Schema.Types.ObjectId],
+		ref: 'ProjectZipFile'
+	},
+	hasSubmitted: false
 });
 
 userSchema.plugin(uniqueValidator);

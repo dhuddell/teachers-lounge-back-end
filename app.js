@@ -2,6 +2,10 @@
 
 'use strict';
 
+var util = require('util');
+var path = require('path');
+
+
 var express = require('express');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
@@ -19,6 +23,13 @@ var users = require('./routes/users');
 var projects = require('./routes/projects');
 
 var app = express();
+
+var uploadBaseUrl = function (req) {
+  return util.format('%s://%s:%s/images',
+    req.protocol,
+    req.hostname,
+    app.get ('port'));
+};
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -58,7 +69,9 @@ app.use(passport.session());
 app.use('/', routes);
 app.use('/users', users);
 app.use('/projects', projects);
+app.use('/project_zip_files', require('./routes/project_zip_files'));
 
+app.use(express.static(path.join(__dirname, 'public'), { index: false }));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

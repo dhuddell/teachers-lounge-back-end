@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var ctrl = require('../controllers/project');
+var ctrl = require('../controllers/projects');
 
 
 router.route('/').
