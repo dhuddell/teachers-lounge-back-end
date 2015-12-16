@@ -37,6 +37,24 @@ var ctrl = {
         ]
     },
 
+//DISPLAY ALL PROJECTS **FOR SEARCH**
+searchProjects : function(req, res, next) {
+        console.log(req.query);
+        if(!req.user && req.user.hasSubmitted === true) {
+            var err = new Error("Not submitted-level user!");
+            return next(err);
+        }
+
+        Project.findOne({ 'title' : req.query.q }, 'title subject').exec().then(function(projects){
+            res.json(projects);
+        }).catch(function(err){
+            next(err);
+        });
+
+
+
+    },
+
 
 //UPDATED showProjects
 

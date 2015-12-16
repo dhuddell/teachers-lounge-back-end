@@ -21,6 +21,7 @@ var cors = require('cors');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var projects = require('./routes/projects');
+var searchProjects = require('./routes/search_projects');
 
 var app = express();
 
@@ -69,6 +70,8 @@ app.use(passport.session());
 app.use('/', routes);
 app.use('/users', users);
 app.use('/projects', projects);
+app.use('/search_projects', searchProjects);
+
 app.use('/project_zip_files', require('./routes/project_zip_files'));
 
 app.use(express.static(path.join(__dirname, 'public'), { index: false }));

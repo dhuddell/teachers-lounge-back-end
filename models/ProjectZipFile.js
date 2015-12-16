@@ -1,7 +1,7 @@
 'use strict';
 
 var mongoose = require('mongoose');
-var UserId = mongoose.Schema.Types.ObjectId;
+// var UserId = mongoose.Schema.Types.ObjectId;
 var projectZipFileSchema = new mongoose.Schema({
   url: {
     type: String,
@@ -11,13 +11,13 @@ var projectZipFileSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  user_id: {
-    type: UserId,
-    ref: "User"
-  },
+  // user_id: {
+  //   type: UserId,
+  //   ref: "User"
+  // },
   createdAt: {
     type: Date,
-    required: Date.now
+    default: Date.now
   }
 });
 
