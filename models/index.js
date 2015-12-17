@@ -5,8 +5,6 @@ mongoose.Promise = Promise;
 
 mongoose.model('User', require('./User'));
 mongoose.model('Project', require('./Project'));
-mongoose.model('ProjectZipFile', require('./ProjectZipFile'));
-
 
 mongoose.connect("mongodb://localhost/teachers-lounge");
 

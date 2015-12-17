@@ -17,10 +17,6 @@ var userSchema = new Schema({
 		type: Schema.Types.ObjectId,
 		ref: "Project"
 	}],
-	userFiles: {
-		type: [mongoose.Schema.Types.ObjectId],
-		ref: 'ProjectZipFile'
-	},
 	hasSubmitted: false
 });
 

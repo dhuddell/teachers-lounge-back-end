@@ -21,10 +21,14 @@ var projectSchema = new Schema({
     // required : true
   },
   url: {
-    type : String,
-    // required : true
+    type: String,
+    required: true
+  },
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
   }
-});
+}, { timestamps: true });
 
 module.exports = projectSchema;
 
