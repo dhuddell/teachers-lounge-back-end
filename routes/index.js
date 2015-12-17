@@ -1,9 +1,10 @@
 var express = require('express');
 var router = express.Router();
-var authCtrl = require('../controllers/auth');
+var authController = require('../controllers/auth');
+
 
 /* GET home page. */
-router.get('/', authCtrl.root.get);
+router.get('/', authController.root.get);
 
 /**AUTH ROUTES
  *	a login route using `passport.authenticate`
@@ -11,18 +12,20 @@ router.get('/', authCtrl.root.get);
  *
  */
 router.route('/login').
-	get(authCtrl.deny).
-	post(authCtrl.login.post);
+    get(authController.deny).
+    post(authController.login.post).
+    all(authController.login.all);
 
 router.route('/logout').
-	all(authCtrl.logout.all);
+	all(authController.logout.all);
 
 router.route('/changePassword').
-	get(authCtrl.deny).
-	patch(authCtrl.changePassword.patch);
+	get(authController.deny).
+	patch(authController.changePassword.patch);
 
 router.route('/signup').
-	get(authCtrl.deny).
-	post(authCtrl.signup.post);
+	get(authController.deny).
+	post(authController.signup.post);
+
 
 module.exports = router;

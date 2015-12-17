@@ -6,17 +6,22 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "aws-sdk": "^2.2.22",
     "bcrypt": "^0.8.5",
     "body-parser": "^1.13.2",
     "connect-mongo": "^0.8.2",
     "cors": "^2.7.1",
+    "crypto": "0.0.3",
     "debug": "^2.2.0",
     "dotenv": "^1.2.0",
     "express": "^4.13.1",
     "express-session": "^1.11.3",
+    "file-type": "^3.3.1",
+    "fs": "0.0.2",
     "mongoose": "^4.2.6",
     "mongoose-unique-validator": "^0.6.1",
     "morgan": "^1.6.1",
+    "multer": "^1.1.0",
     "passport": "^0.2.2",
     "passport-local": "^1.0.0",
     "uuid": "^2.0.1"
