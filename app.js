@@ -36,7 +36,7 @@ var uploadBaseUrl = function (req) {
 app.use(logger('dev'));
 
 app.use(cors({
-  origin: ['http://localhost:5000'],
+  origin: ['http://localhost:5000', 'http://dhuddell.github.io'],
   credentials: true
 }));
 
@@ -47,7 +47,7 @@ app.use(session({
   resave : false,
   saveUninitialized : false,
   store : new MongoStore({
-    url : 'mongodb://localhost/teachers-lounge-sessions'
+    url : process.env.MONGOLAB_URI
   }),
   cookie : {
     maxAge : 300000 // 5 minutes
