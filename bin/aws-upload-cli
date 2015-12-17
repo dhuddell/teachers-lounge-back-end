@@ -9,9 +9,9 @@ var fs = require('fs');
 var buffer = fs.readFileSync(process.argv[2]);
 var caption = process.argv[3];
 
-var awsUpload = require('../lib/aws-upload.js');
+var aws = require('../lib/aws.js');
 
-awsUpload(buffer, caption).then(function(data) {
+aws.upload(buffer, caption).then(function(data) {
   console.log(data);
 }).catch(function(error) {
   console.error(error);

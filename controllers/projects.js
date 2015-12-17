@@ -6,7 +6,7 @@ mongoose.Promise = Promise;
 
 var User = require('../models').model('User');
 var Project = require('../models').model('Project');
-var awsUpload = require('../lib/aws-upload.js');
+var aws = require('../lib/aws.js');
 
 
 var controller = {
@@ -44,7 +44,7 @@ var controller = {
             var err = new Error("No content!");
             return next(err);
         }
-        awsUpload(req.file.buffer).then(function(data){
+        aws.upload(req.file.buffer).then(function(data){
             return Project.create({
                 title : req.body.title,
                 description : req.body.description,
@@ -89,7 +89,7 @@ var controller = {
             return next(err);
         }
 
-        awsUpload(req.file.buffer).then(function(data){
+        aws.upload(req.file.buffer).then(function(data){
             return Project.findByIdAndUpdate(
               req.params.id,
               {
@@ -111,8 +111,11 @@ var controller = {
 
     destroy : function(req, res, next) {
          Project.findByIdAndRemove(req.params.id).exec().then(function(project){
+            var key = project.url.split('dhuddell-01.s3.amazonaws.com/')[1];
+            aws.delete({'key': key});
+          }).then(function(project){
             res.json(project);
-        }).catch(function(err){
+          }).catch(function(err){
             console.log(err);
             next(err);
         }) ;
