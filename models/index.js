@@ -6,6 +6,5 @@ mongoose.Promise = Promise;
 mongoose.model('User', require('./User'));
 mongoose.model('Project', require('./Project'));
 
-mongoose.connect("mongodb://localhost/teachers-lounge");
-
+mongoose.connect(process.env.MONGOLAB_URI);
 module.exports = mongoose;
